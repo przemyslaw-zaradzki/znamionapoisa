@@ -62,3 +62,7 @@ def result():
     prediction = processing(os.path.join(app.config["UPLOADED_IMAGES_DEST"], "skinn.jpg"))
     pict = os.path.join(app.config["DISPLAY_IMAGES_PATH"], "skinn.jpg")
     return render_template('result.html', pict = pict, p=prediction)
+
+@app.route("/about")
+def about():
+    return render_template('about.html')
