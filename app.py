@@ -1,9 +1,5 @@
-#from posixpath import realpath
 from flask import Flask, render_template, request, redirect, url_for
-#from flask_wtf import FlaskForm
 from werkzeug.utils import secure_filename
-#from wtforms import FileField
-#from flask_uploads import configure_uploads, IMAGES, UploadSet
 import os
 from image_processing import processing
 
@@ -26,23 +22,10 @@ def allowed_image(filename):
     else:
         return False
 
-#def allowed_image_filesize(filesize):
-#    if int(filesize) <= app.config["MAX_IMAGE_FILESIZE"]:
-#        return True
-#    else:
-#        return False
-
-#images = UploadSet('images', IMAGES)
-#configure_uploads(app, images)
-
-
 @app.route("/", methods=["GET", "POST"])
 def upload_image():
     if request.method == "POST":
         if request.files:
-            #if not allowed_image_filesize(request.cookies.get("filesize")):
-            #    print("File exceeded maximum size")
-            #    return redirect(request.url)
             image = request.files["image"]
             if image.filename == "":
                 print("Image must have a filename")
