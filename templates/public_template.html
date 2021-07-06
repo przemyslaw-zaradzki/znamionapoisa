@@ -26,12 +26,20 @@
       </ul>
     </div>
   </nav>
+  
+  <div class="container">
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+    {% endfor %}
+  </div>
 
   <main>
     {% block main %}{% endblock %}
   </main>
-
-  <!-- Import jquery 3.3.1 slim min -->
+  <!-- Import jquery 3.5.1 slim min -->
   <script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
   <!-- Import Bootstrap bundle -->
   <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 import os
 from image_processing import processing
@@ -28,10 +28,10 @@ def upload_image():
         if request.files:
             image = request.files["image"]
             if image.filename == "":
-                print("Image must have a filename")
+                flash("Image must have a filename")
                 return redirect(request.url)
             if not allowed_image(image.filename):
-                print("That image extension is not allowed")
+                flash("That image extension is not allowed")
                 return redirect(request.url)
             else:
                 filename = secure_filename(image.filename)
