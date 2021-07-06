@@ -36,5 +36,6 @@ def transforms_array(image_array):
 def get_prediction(image_tensor):
     images = image_tensor
     outputs = model(images)
+    probabilities = nn.Softmax(1)(outputs)
     _, predictions = torch.max(outputs, 1)
-    return predictions
+    return predictions, probabilities.tolist()[0]

@@ -7,9 +7,27 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1>Predykcja: {{p}}</h1>
+            <h1>Predykcja: {{class_names[prediction]}}</h1>
             <hr>
             <img src="{{ pict }}" alt="User Image" width="100%">
+            <hr>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Choroba</th>
+                    <th scope="col">Pewność klasyfikacji</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for cn in class_names %}
+                    <tr>
+                        <td scope="row">{{cn}}</td>
+                        <td>{{'%0.5f' % probabilities[loop.index-1]}}</td>
+                    </tr>    
+                    <p>{{ page }}</p>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

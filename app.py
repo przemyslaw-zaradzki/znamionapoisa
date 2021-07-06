@@ -42,9 +42,9 @@ def upload_image():
 
 @app.route("/result")
 def result():
-    prediction = processing(os.path.join(app.config["UPLOADED_IMAGES_DEST"], "skinn.jpg"))
+    class_names, prediction, probabilities = processing()
     pict = os.path.join(app.config["DISPLAY_IMAGES_PATH"], "skinn.jpg")
-    return render_template('result.html', pict = pict, p=prediction)
+    return render_template('result.html', pict = pict, class_names=class_names, prediction=prediction, probabilities=probabilities)
 
 @app.route("/about")
 def about():
