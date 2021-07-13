@@ -26,7 +26,7 @@ def allowed_image(filename):
 def upload_image():
     if request.method == "POST":
         if request.files:
-            image = request.files["image"]
+            image = request.files["inpFile"]
             if image.filename == "":
                 flash("Image must have a filename")
                 return redirect(request.url)
