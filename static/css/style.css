@@ -18,3 +18,8 @@
     display: none;
     width: 100%;
 }
+
+
+.result_img {
+    display: inline-block;
+}
