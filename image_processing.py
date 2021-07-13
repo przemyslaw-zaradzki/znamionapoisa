@@ -1,6 +1,6 @@
 from Model import transforms_array, get_prediction
 
-def processing():
+def processing(img_name):
     class_names = [ 'choroba Bowena',
     'rak podstawnokomórkowy',
     'łagodne rogowacenie',
@@ -8,7 +8,6 @@ def processing():
     'czerniak',
     'znamię melanocytowe',
     'zmiana naczyniowa' ]
-    tensor = transforms_array("static/images/skinn.jpg")
+    tensor = transforms_array("static/images/"+img_name)
     prediction, probabilities = get_prediction(tensor)
-    print(class_names[int(prediction)])
     return class_names, prediction, probabilities

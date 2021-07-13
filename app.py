@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
 from werkzeug.utils import secure_filename
 import os
 from image_processing import processing
@@ -10,7 +10,7 @@ images_folder = os.path.join("static", "images")
 app.config['SECRET_KEY'] = 'thisisasecrete'
 app.config['UPLOADED_IMAGES_DEST'] = 'static/images'
 app.config['DISPLAY_IMAGES_PATH'] = images_folder
-app.config['ALLOWED_IMAGE_EXTENSIONS'] = ["JPG"]
+app.config['ALLOWED_IMAGE_EXTENSIONS'] = ["JPG", "JPEG", "PNG"]
 app.config['MAX_IMAGE_FILESIZE'] = 1 * 1024 * 1024
 
 def allowed_image(filename):
@@ -35,16 +35,19 @@ def upload_image():
                 return redirect(request.url)
             else:
                 filename = secure_filename(image.filename)
-            #image.save(os.path.join(app.config["UPLOADED_IMAGES_DEST"], filename))
-            image.save(app.config["UPLOADED_IMAGES_DEST"] + "/skinn.jpg")
-            return redirect(url_for('.result'))
+            image.save(os.path.join(app.config["UPLOADED_IMAGES_DEST"], filename))
+            return redirect(url_for('.result', img_name=filename))
     return render_template('upload_image.html')
 
-@app.route("/result")
-def result():
-    class_names, prediction, probabilities = processing()
-    pict = os.path.join(app.config["DISPLAY_IMAGES_PATH"], "skinn.jpg")
+@app.route("/result/<img_name>")
+def result(img_name):
+    class_names, prediction, probabilities = processing(img_name)
+    pict = url_for('.send_file', filename=img_name)
     return render_template('result.html', pict = pict, class_names=class_names, prediction=prediction, probabilities=probabilities)
+
+@app.route('/uploads/<filename>')
+def send_file(filename):
+    return send_from_directory(app.config['UPLOADED_IMAGES_DEST'], filename)
 
 @app.route("/about")
 def about():

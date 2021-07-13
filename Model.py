@@ -30,7 +30,7 @@ def transforms_array(image_array):
         transforms.Normalize(mean, std)]
     )
 
-    image = Image.open(image_array)
+    image = Image.open(image_array).convert('RGB')
     return transformer(image).unsqueeze(0)
 
 def get_prediction(image_tensor):
